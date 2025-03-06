@@ -1,29 +1,38 @@
 import {createRouter,createWebHistory,type RouteRecordRaw} from 'vue-router'
-import Login from '@/views/LoginView.vue'
-import Register from '@/views/RegisterView.vue'
-import List from '@/views/ListView.vue'
-import Create from '@/views/CreateView.vue'
+import LoginView from '@/views/LoginView.vue'
+import RegisterView from '@/views/RegisterView.vue'
+import HomeView from '@/views/HomeView.vue'
+import Create from '@/views/Create.vue'
+import List from '@/views/List.vue'
 
 const routes:RouteRecordRaw[] = [
   {
     path: '/',
     name: 'Login',
-    component: Login
+    component: LoginView
   },
   {
     path: '/register',
     name: 'Register',
-    component: Register
+    component: RegisterView
   },
   {
-    path: '/list',
-    name: 'List',
-    component: List
-  },
-  {
-    path: '/create',
-    name: 'Create',
-    component: Create
+    path: '/home',
+    name: 'Home',
+    component: HomeView,
+    children: [
+      {
+        path: '/home/create',
+        name: 'Create',
+        component: Create
+      },
+      {
+        path: '/home/list',
+        name: 'List',
+        component: List
+      }
+    ]
+
   }
 ]
 

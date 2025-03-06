@@ -4,23 +4,51 @@
             <div class="title w-[25rem] h-[7rem] bg-sky-500 text-4xl tracking-[0.3rem] font-bold text-white mb-[3rem] flex justify-center items-center">
                 天天记账本
             </div>
-            <el-form label-width="auto" style="max-width: 600px" class="flex flex-col">
-                <div class="mb-[3rem] text-2xl tracking-[0.3rem] font-bold flex justify-center items-center">登录</div>
-                <el-input v-model=username style="width: 240px" placeholder="username" class="mb-[1rem]"/>
-                <el-input v-model=password style="width: 240px" placeholder="password" type="password" class="mb-[2rem]"/>
+            <el-form v-model="form" label-width="auto" style="max-width: 600px" class="flex flex-col">
+                <div class="mb-[3rem] text-2xl tracking-[0.5rem] text-center font-bold">登录</div>
+                <el-form-item label="用户名">
+                    <el-input v-model="form.username" style="width: 240px" placeholder="username" class="mb-[1rem]"/>
+                </el-form-item>
+                <el-form-item label="密码">
+                    <el-input v-model="form.password" style="width: 240px" placeholder="password" type="password" class="mb-[2rem]"/>
+                </el-form-item>
                 <div class="flex justify-between">
-                    <el-button type="primary" class="w-[100px]">登录</el-button>
-                    <el-button type="primary" class="w-[100px]"><a href="/register">去注册</a></el-button>
+                    <el-form-item>
+                        <el-button type="primary" class="w-[100px]" @click="loginUser">登录</el-button>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" class="w-[100px]"><a href="/register">去注册</a></el-button>
+                    </el-form-item>
                 </div>
             </el-form>
         </div>
     </div>
-
 </template>
 
 <script setup>
-const username = ref('')
-const password = ref('')
+import axios from 'axios';
+
+const form = ref({
+    username: '',
+    password: ''
+})
+const router = useRouter();
+
+const loginUser = async () => {
+    try {
+        // 发送注册请求
+        const response = await axios.post('http://127.0.0.1:3000/api/auth/login', form.value);
+        console.log(response.data.message);
+        // 客户端收到响应后
+        const token = response.data.token;
+        console.log('token:', token);
+        localStorage.setItem('token', token);
+        // 注册成功，跳转到登录页面
+        router.push('/home');
+    } catch (error) {
+        console.error('登陆失败:', error.response ? error.response.data.message : error.message);
+    }
+};
 </script>
 
 <style scoped>
