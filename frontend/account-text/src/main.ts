@@ -1,4 +1,5 @@
 import './assets/main.css'
+import 'element-plus/theme-chalk/display.css'
 import axios from 'axios';
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

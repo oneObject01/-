@@ -1,6 +1,5 @@
 <template>
-    <div class="p-8 max-w-md mx-auto">
-      <h1 class="text-2xl font-bold mb-4">记账本 - 创建收支记录</h1>
+    <div class="create p-8 max-w-md mx-auto">
       <el-form :model="form" label-width="80px">
         <el-form-item label="类型">
           <el-radio-group v-model="form.type">
